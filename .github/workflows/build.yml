@@ -59,17 +59,18 @@ jobs:
         with:
           path: artifacts
 
-      - name: Display structure
+      - name: Rename files for release
         run: |
-          ls -R artifacts
+          mkdir -p release
+          cp artifacts/challenge-linux-amd64/challenge release/linux-chall
+          cp artifacts/challenge-macos-amd64/challenge release/macos-chall
+          cp artifacts/challenge-windows-amd64.exe/challenge.exe release/windows-chall.exe
+          ls -la release/
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            artifacts/challenge-linux-amd64/challenge
-            artifacts/challenge-macos-amd64/challenge
-            artifacts/challenge-windows-amd64.exe/challenge.exe
+          files: release/*
           draft: false
           prerelease: false
           generate_release_notes: true
