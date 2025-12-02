@@ -59,16 +59,17 @@ jobs:
         with:
           path: artifacts
 
-      - name: Prepare release files
+      - name: Display structure
         run: |
-          mkdir -p release
-          find artifacts -type f -exec cp {} release/ \;
-          ls -la release/
+          ls -R artifacts
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: release/*
+          files: |
+            artifacts/challenge-linux-amd64/challenge
+            artifacts/challenge-macos-amd64/challenge
+            artifacts/challenge-windows-amd64.exe/challenge.exe
           draft: false
           prerelease: false
           generate_release_notes: true
